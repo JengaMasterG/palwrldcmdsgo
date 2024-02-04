@@ -15,7 +15,7 @@ import (
 	"github.com/gorcon/rcon"
 )
 
-var IPAddress, password = "74.109.15.14:25575", "R3dston3$"
+var IPAddress, password = "IPAddress", "Password"
 func BanPlayer(){
 
 }
