@@ -16,10 +16,7 @@ import (
 	"github.com/gorcon/rcon"
 )
 
-// Define empty variables for commands.
-var IPAddress, password, seconds, message, steamID = "Public_IP:Port", "AdminPassword", "", "", ""
-
-func BanPlayer(string) string {
+func BanPlayer(IPAddress string, password string, steamID string) string {
 
 	conn, err := rcon.Dial(IPAddress, password)
 	if err != nil {
@@ -36,7 +33,7 @@ func BanPlayer(string) string {
 
 }
 
-func Broadcast() {
+func Broadcast(IPAddress string, password string, message string) {
 
 	conn, err := rcon.Dial(IPAddress, password)
 	if err != nil {
@@ -52,7 +49,7 @@ func Broadcast() {
 	log.Printf(response)
 }
 
-func DoExit() string {
+func DoExit(IPAddress string, password string) string {
 	/*
 		Causes a FORCE SHUTDOWN of the Palworld Server. The server will automatically restart
 		if being ran from a Linux Server as a Service (systemd)log.
@@ -77,7 +74,7 @@ func DoExit() string {
 	return response
 }
 
-func Info() string {
+func Info(IPAddress string, password string) string {
 	conn, err := rcon.Dial(IPAddress, password)
 	if err != nil {
 		log.Fatal(err)
@@ -92,7 +89,7 @@ func Info() string {
 	return response
 }
 
-func KickPlayer(string) string {
+func KickPlayer(IPAddress string, password string, steamID string) string {
 
 	conn, err := rcon.Dial(IPAddress, password)
 	if err != nil {
@@ -108,7 +105,7 @@ func KickPlayer(string) string {
 	return response
 }
 
-func ShowPlayers() string {
+func ShowPlayers(IPAddress string, password string) string {
 
 	conn, err := rcon.Dial(IPAddress, password)
 	if err != nil {
@@ -124,7 +121,7 @@ func ShowPlayers() string {
 	return response
 }
 
-func Save() string {
+func Save(IPAddress string, password string) string {
 
 	conn, err := rcon.Dial(IPAddress, password)
 	if err != nil {
@@ -140,7 +137,7 @@ func Save() string {
 	return response
 }
 
-func Shutdown(string, string) string {
+func Shutdown(IPAddress string, password string, seconds string, message string) string {
 
 	conn, err := rcon.Dial(IPAddress, password)
 	if err != nil {
@@ -156,7 +153,7 @@ func Shutdown(string, string) string {
 	return response
 }
 
-func Test() {
+func Test(IPAddress string, password string) (bool, error) {
 
 	conn, err := rcon.Dial(IPAddress, password)
 	if err != nil {
@@ -167,9 +164,13 @@ func Test() {
 	response, err := conn.Execute("info")
 	if err != nil {
 		log.Fatal(err)
+
+		return false, err
 	}
 
 	log.Println(response)
 
 	log.Printf("Connected Successfully!")
+
+	return true, err
 }
