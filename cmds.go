@@ -8,7 +8,7 @@ The [Source RCON Protocol] from SteamCMD allows the moderation of a server witho
 
 [Source RCON Protocol]: https://developer.valvesoftware.com/wiki/Source_RCON_Protocol
 */
-package cmds
+package palwrldcmdsgo
 
 import (
 	"log"
@@ -153,7 +153,7 @@ func Shutdown(IPAddress string, password string, seconds string, message string)
 	return response
 }
 
-func Test(IPAddress string, password string) (bool, error) {
+func Test(IPAddress string, password string) (bool, error, string) {
 
 	conn, err := rcon.Dial(IPAddress, password)
 	if err != nil {
@@ -165,12 +165,12 @@ func Test(IPAddress string, password string) (bool, error) {
 	if err != nil {
 		log.Fatal(err)
 
-		return false, err
+		return false, err, response
 	}
 
 	log.Println(response)
 
 	log.Printf("Connected Successfully!")
 
-	return true, err
+	return true, err, response
 }

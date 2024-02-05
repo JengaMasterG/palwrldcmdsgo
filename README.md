@@ -12,13 +12,21 @@ In main.go:
 package main
 
 import (
-    "palwordManager/cmds"
+	"fmt"
+
+	"github.com/JengaMasterG/palwrldcmdsgo"
 )
 
 var IPAddress, password = "Public_IP:Port", "AdminPassword"
 
 func main(){
-    cmds.Test(IPAddress, password)
+    result, err, response := palwrldcmdsgo.Test(IPAddress, password)
+	if result == false || err != nil{
+		fmt.Printf(`Test command did not connect: %v`, err)
+	}else{
+		fmt.Printf(response)
+        fmt.Printf(`Palworld connection test successful!`)
+	}
 }
 ```
 

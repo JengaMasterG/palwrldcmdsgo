@@ -1,4 +1,4 @@
-module palworldManager/cmds
+module github.com/JengaMasterG/palwrldcmdsgo
 
 go 1.21.6
 
