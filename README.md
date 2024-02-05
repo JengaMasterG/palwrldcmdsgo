@@ -27,3 +27,8 @@ Before Executing:
 - Replace `AdminPassword` with the server's Admin Password.
 
 Running the main.go with `go run .` will run the `Test` function to see if the server is running.
+
+## Helpful Resources
+[Palworld Tech Guide](https://tech.palworldgame.com/dedicated-server-guide)
+
+[Palworld Commands](https://tech.palworldgame.com/server-commands)
