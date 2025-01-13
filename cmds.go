@@ -16,11 +16,6 @@ import (
 	"github.com/gorcon/rcon"
 )
 
-func Dial(IPAddress string, password string) (*rcon.Conn, error) {
-	conn, err := rcon.Dial(IPAddress, password)
-	return conn, err
-}
-
 func BanPlayer(IPAddress string, password string, steamID string) (string, error) {
 
 	conn, err := rcon.Dial(IPAddress, password)
