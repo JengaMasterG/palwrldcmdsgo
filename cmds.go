@@ -16,161 +16,137 @@ import (
 	"github.com/gorcon/rcon"
 )
 
-func BanPlayer(IPAddress string, password string, steamID string) string {
+func Dial(IPAddress string, password string) (*rcon.Conn, error) {
+	conn, err := rcon.Dial(IPAddress, password)
+	return conn, err
+}
+
+func BanPlayer(IPAddress string, password string, steamID string) (string, error) {
 
 	conn, err := rcon.Dial(IPAddress, password)
 	if err != nil {
-		log.Fatal(err)
+		log.Print("[WARN]: Error Occured")
+		return "", err
 	}
 	defer conn.Close()
 
 	response, err := conn.Execute("BanPlayer " + steamID)
-	if err != nil {
-		log.Fatal(err)
-	}
 
-	return response
-
+	return response, err
 }
 
-func Broadcast(IPAddress string, password string, message string) {
+func Broadcast(IPAddress string, password string, message string) error {
 
 	conn, err := rcon.Dial(IPAddress, password)
 	if err != nil {
-		log.Fatal(err)
+		log.Print("[WARN]: Error Occured")
+		return err
 	}
 	defer conn.Close()
 
 	response, err := conn.Execute("Broadcast " + message)
-	if err != nil {
-		log.Fatal(err)
-	}
 
-	log.Printf(response)
+	log.Print(response)
+
+	return err
 }
 
-func DoExit(IPAddress string, password string) string {
+func DoExit(IPAddress string, password string) (string, error) {
 	/*
 		Causes a FORCE SHUTDOWN of the Palworld Server. The server will automatically restart
 		if being ran from a Linux Server as a Service (systemd)log.
 	*/
-	log.Printf("[WARN]:====SERVER FORCE SHUTDOWN STARTED====")
+	log.Print("[WARN]:====SERVER FORCE SHUTDOWN STARTED====")
 
 	conn, err := rcon.Dial(IPAddress, password)
 	if err != nil {
-		log.Fatal(err)
+		log.Print("[WARN]: Error Occured")
+		return "", err
 	}
 	defer conn.Close()
 
 	response, err := conn.Execute("DoExit")
-	if err != nil {
-		log.Fatal(err)
-	}
 
-	log.Printf("[WARN]: " + response)
+	log.Print("[WARN]: " + response)
 
 	log.Printf("[WARN]:====SERVER FORCE SHUTDOWN COMPLETED====")
 
-	return response
+	return response, err
 }
 
-func Info(IPAddress string, password string) string {
+func Info(IPAddress string, password string) (string, error) {
+
 	conn, err := rcon.Dial(IPAddress, password)
 	if err != nil {
-		log.Fatal(err)
+		log.Print("[WARN]: Error Occured")
+		return "", err
 	}
 	defer conn.Close()
 
 	response, err := conn.Execute("info")
-	if err != nil {
-		log.Fatal(err)
-	}
 
-	return response
+	return response, err
 }
 
-func KickPlayer(IPAddress string, password string, steamID string) string {
+func KickPlayer(IPAddress string, password string, steamID string) (string, error) {
 
 	conn, err := rcon.Dial(IPAddress, password)
 	if err != nil {
-		log.Fatal(err)
+		log.Print("[WARN]: Error Occured")
+		return "", err
 	}
 	defer conn.Close()
 
 	response, err := conn.Execute("KickPlayer " + steamID)
-	if err != nil {
-		log.Fatal(err)
-	}
 
-	return response
+	return response, err
 }
 
-func ShowPlayers(IPAddress string, password string) string {
+func ShowPlayers(IPAddress string, password string) (string, error) {
 
 	conn, err := rcon.Dial(IPAddress, password)
 	if err != nil {
-		log.Fatal(err)
+		log.Print("[WARN]: Error Occured")
+		return "", err
 	}
 	defer conn.Close()
 
 	response, err := conn.Execute("ShowPlayers")
-	if err != nil {
-		log.Fatal(err)
-	}
 
-	return response
+	return response, err
 }
 
-func Save(IPAddress string, password string) string {
+func Save(IPAddress string, password string) (string, error) {
 
 	conn, err := rcon.Dial(IPAddress, password)
 	if err != nil {
-		log.Fatal(err)
+		log.Print("[WARN]: Error Occured")
+		return "", err
 	}
 	defer conn.Close()
 
 	response, err := conn.Execute("Save")
-	if err != nil {
-		log.Fatal(err)
-	}
 
-	return response
+	return response, err
 }
 
-func Shutdown(IPAddress string, password string, seconds string, message string) string {
+func Shutdown(IPAddress string, password string, seconds string, message string) (string, error) {
 
 	conn, err := rcon.Dial(IPAddress, password)
 	if err != nil {
-		log.Fatal(err)
+		log.Print("[WARN]: Error Occured")
+		return "", err
 	}
 	defer conn.Close()
 
 	response, err := conn.Execute("Shutdown " + seconds + " " + message)
-	if err != nil {
-		log.Fatal(err)
-	}
 
-	return response
+	return response, err
 }
 
-func Test(IPAddress string, password string) (bool, error, string) {
+func Test(IPAddress string, password string) (string, error) {
 
-	conn, err := rcon.Dial(IPAddress, password)
-	if err != nil {
-		log.Fatal(err)
-	}
-	defer conn.Close()
+	response, err := Info(IPAddress, password)
 
-	response, err := conn.Execute("info")
-	if err != nil {
-		log.Fatal(err)
-
-		return false, err, response
-	}
-
-	log.Println(response)
-
-	log.Printf("Connected Successfully!")
-
-	return true, err, response
+	return response, err
 }

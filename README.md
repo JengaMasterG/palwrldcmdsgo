@@ -12,20 +12,21 @@ In main.go:
 package main
 
 import (
-	"fmt"
+	"log"
 
 	"github.com/JengaMasterG/palwrldcmdsgo"
 )
 
-var IPAddress, password = "Public_IP:Port", "AdminPassword"
+var IPAddress, password = "IPAddress", "password"
 
-func main(){
-    result, err, response := palwrldcmdsgo.Test(IPAddress, password)
-	if result == false || err != nil{
-		fmt.Printf(`Test command did not connect: %v`, err)
-	}else{
-		fmt.Printf(response)
-        fmt.Printf(`Palworld connection test successful!`)
+func main() {
+	response, err := palwrldcmdsgo.Test(IPAddress, password)
+	if err != nil {
+		log.Printf(`WARN: %v`, err)
+		log.Print("FATAL: Palworld connection failed!")
+	} else {
+		log.Print(`INFO: Palworld connection test successful!`)
+		log.Print(`INFO: `, response)
 	}
 }
 ```
